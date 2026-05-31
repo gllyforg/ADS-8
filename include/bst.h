@@ -3,128 +3,96 @@
 #define INCLUDE_BST_H_
 
 #include <iostream>
+#include <utility>
 #include <string>
 #include <algorithm>
 #include <vector>
+
 template <typename T>
 class BST {
  private:
     struct Node {
-        T key;
-        int count;
+        T val;
+        int ocCount;
         Node* left;
         Node* right;
 
-        explicit Node(const T& val) : key(val), count(1), left(nullptr), right(nullptr) {}
+        explicit Node(const T& t) : val(t), ocCount(1), left(nullptr), right(nullptr) {}
     };
 
     Node* root;
-    int nodeCount;
 
-    Node* insert(Node* node, const T& value) {
-        if (node == nullptr) {
-            nodeCount++;
-            return new Node(value);
+    Node* add(Node* n, const T& t) {
+        if (!n) {
+            return new Node(t);
         }
-
-        if (value < node->key) {
-            node->left = insert(node->left, value);
-        } else if (value > node->key) {
-            node->right = insert(node->right, value);
+        if (t == n->val) {
+            n->ocCount++;
+            return n;
+        }
+        if (t < n->val) {
+            n->left = add(n->left, t);
         } else {
-            node->count++;
+            n->right = add(n->right, t);
         }
-        return node;
+        return n;
     }
 
-    Node* searchNode(Node* node, const T& value) const {
-        if (node == nullptr || node->key == value) {
-            return node;
-        }
-
-        if (value < node->key) {
-            return searchNode(node->left, value);
-        } else {
-            return searchNode(node->right, value);
-        }
+    int depthTree(Node* n) const {
+        if (!n) return -1;
+        int lDepth = depthTree(n->left);
+        int rDepth = depthTree(n->right);
+        return 1 + (lDepth > rDepth ? lDepth : rDepth);
     }
 
-    int depth(Node* node) const {
-        if (node == nullptr) return 0;
-        int leftDepth = depth(node->left);
-        int rightDepth = depth(node->right);
-        return 1 + std::max(leftDepth, rightDepth);
+    void clear(Node* n) {
+        if (!n) return;
+        clear(n->left);
+        clear(n->right);
+        delete n;
     }
 
-    void inorder(Node* node) const {
-        if (node != nullptr) {
-            inorder(node->left);
-            std::cout << node->key << ": " << node->count << std::endl;
-            inorder(node->right);
-        }
-    }
-
-    void clear(Node* node) {
-        if (node != nullptr) {
-            clear(node->left);
-            clear(node->right);
-            delete node;
-        }
-    }
-
-    void collectNodes(Node* node, std::vector<Node*>& nodes) const {
-        if (node != nullptr) {
-            collectNodes(node->left, nodes);
-            nodes.push_back(node);
-            collectNodes(node->right, nodes);
-        }
+    void ord(Node* n, std::vector<std::pair<T, int>>& res) const {
+        if (!n) return;
+        ord(n->left, res);
+        res.push_back({n->val, n->ocCount});
+        ord(n->right, res);
     }
 
  public:
-    BST() : root(nullptr), nodeCount(0) {}
+    BST() : root(nullptr) {}
 
     ~BST() {
         clear(root);
     }
 
     void insert(const T& value) {
-        root = insert(root, value);
+        root = add(root, value);
     }
 
     int search(const T& value) const {
-    Node* node = searchNode(root, value);
-    if (node != nullptr) {
-      return node->count;
+        Node* node = root;
+        while (node) {
+            if (value == node->val) {
+                return node->ocCount;
+            }
+            if (value < node->val) {
+                node = node->left;
+            } else {
+                node = node->right;
+            }
+        }
+        return 0;
     }
-    return 0;
-  }
 
     int depth() const {
-        return depth(root);
+        return depthTree(root);
     }
 
-    int size() const {
-        return nodeCount;
-    }
-
-    bool empty() const {
-        return root == nullptr;
-    }
-
-    void printInorder() const {
-        inorder(root);
-    }
-
-    void getNodesSortedByCount(std::vector<std::pair<T, int>>& result) const {
-        std::vector<Node*> nodes;
-        collectNodes(root, nodes);
-
-        std::sort(nodes.begin(), nodes.end(),
-            [](Node* a, Node* b) { return a->count > b->count; });
-
-        for (Node* node : nodes) {
-            result.push_back({node->key, node->count});
-        }
+    std::vector<std::pair<T, int>> toVector() const {
+        std::vector<std::pair<T, int>> res;
+        ord(root, res);
+        return res;
     }
 };
 
