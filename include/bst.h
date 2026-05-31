@@ -8,8 +8,7 @@
 #include <vector>
 template <typename T>
 class BST {
-
-   private:
+ private:
     struct Node {
         T key;
         int count;
@@ -81,7 +80,7 @@ class BST {
         }
     }
 
-   public:
+ public:
     BST() : root(nullptr), nodeCount(0) {}
 
     ~BST() {
