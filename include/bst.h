@@ -6,11 +6,10 @@
 #include <string>
 #include <algorithm>
 #include <vector>
-
 template <typename T>
 class BST {
 
-  private: 
+   private:
     struct Node {
         T key;
         int count;
@@ -74,7 +73,7 @@ class BST {
         }
     }
 
-    void collectNodes(Node* node, std::vector<Node*>& nodes) const{
+    void collectNodes(Node* node, std::vector<Node*>& nodes) const {
         if (node != nullptr) {
             collectNodes(node->left, nodes);
             nodes.push_back(node);
@@ -82,7 +81,7 @@ class BST {
         }
     }
 
-  public: 
+   public:
     BST() : root(nullptr), nodeCount(0) {}
 
     ~BST() {
