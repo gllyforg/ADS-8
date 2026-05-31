@@ -4,6 +4,7 @@
 #include <string>
 #include <algorithm>
 #include <iostream>
+#include <fstream> 
 
 void makeTree(BST<std::string>& tree, const char* filename) {
   // поместите сюда свой код
