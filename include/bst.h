@@ -95,6 +95,14 @@ class BST {
         return search(root, value);
     }
 
+    int search(const T& value) const {
+    Node* node = search(root, value);
+    if (node != nullptr) {
+      return node->count;
+    }
+    return 0;
+  }
+
     int depth() const {
         return depth(root);
     }
