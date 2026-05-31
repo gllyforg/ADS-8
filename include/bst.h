@@ -1,6 +1,6 @@
 // Copyright 2021 NNTU-CS
-#ifndef BST_H
-#define BST_H
+#ifndef INCLUDE_BST_H_
+#define INCLUDE_BST_H_
 
 #include <iostream>
 #include <string>
@@ -9,7 +9,8 @@
 
 template <typename T>
 class BST {
-  private:
+
+  private: 
     struct Node {
         T key;
         int count;
@@ -81,7 +82,7 @@ class BST {
         }
     }
 
-  public:
+  public: 
     BST() : root(nullptr), nodeCount(0) {}
 
     ~BST() {
@@ -125,4 +126,4 @@ class BST {
     }
 };
 
-#endif  // BST_H
+#endif  // INCLUDE_BST_H_
