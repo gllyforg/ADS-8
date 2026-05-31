@@ -1,7 +1,8 @@
 // Copyright 2021 NNTU-CS
 #include "bst.h"
-#include <iostream>
+
 #include <chrono>
+#include <iostream>
 #include <string>
 
 void makeTree(BST<std::string>& tree, const char* filename);
