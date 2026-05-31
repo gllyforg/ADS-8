@@ -37,15 +37,15 @@ class BST {
         return node;
     }
 
-    Node* search(Node* node, const T& value) const {
+    Node* searchNode(Node* node, const T& value) const {
         if (node == nullptr || node->key == value) {
             return node;
         }
 
         if (value < node->key) {
-            return search(node->left, value);
+            return searchNode(node->left, value);
         } else {
-            return search(node->right, value);
+            return searchNode(node->right, value);
         }
     }
 
@@ -92,7 +92,7 @@ class BST {
     }
 
     int search(const T& value) const {
-    Node* node = search(root, value);
+    Node* node = searchNode(root, value);
     if (node != nullptr) {
       return node->count;
     }
