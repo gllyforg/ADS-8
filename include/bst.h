@@ -91,10 +91,6 @@ class BST {
         root = insert(root, value);
     }
 
-    Node* search(const T& value) const {
-        return search(root, value);
-    }
-
     int search(const T& value) const {
     Node* node = search(root, value);
     if (node != nullptr) {
