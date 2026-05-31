@@ -74,7 +74,7 @@ class BST {
         }
     }
 
-    void collectNodes(Node* node, std::vector<Node*>& nodes) {
+    void collectNodes(Node* node, std::vector<Node*>& nodes) const{
         if (node != nullptr) {
             collectNodes(node->left, nodes);
             nodes.push_back(node);
