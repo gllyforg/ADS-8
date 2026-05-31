@@ -1,10 +1,10 @@
 // Copyright 2021 NNTU-CS
-#include  "bst.h"
-
 #include <string>
 #include <algorithm>
 #include <iostream>
-#include <fstream> 
+#include <fstream>
+
+#include  "bst.h"
 
 void makeTree(BST<std::string>& tree, const char* filename) {
   // поместите сюда свой код
